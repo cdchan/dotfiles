@@ -4,14 +4,12 @@ GREEN='\[\033[32m\]'
 YELLOW='\[\033[33m\]'
 OFF='\[\033[0m\]'
 
+# simple prompt
 # export PS1="${CYAN}\u@${GREEN}\h:${YELLOW}\w${OFF}$ "
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 alias ls='ls -GFh'
-
-# title of window
-PROMPT_COMMAND='echo -ne "\033]0; ${PWD##*/}\007"'
 
 function git_prompt () {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
@@ -44,9 +42,11 @@ function virtualenv_info() {
   echo $venv
 }
 
+# this includes username in prompt
 # export PROMPT_COMMAND='PS1="$(virtualenv_info)${CYAN}\u@${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ "'
 
-export PROMPT_COMMAND='PS1="$(virtualenv_info)${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ "'
+# sets prompt and window title
+export PROMPT_COMMAND='PS1="$(virtualenv_info)${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ " ; echo -ne "\033]0; ${PWD##*/}\007"'
 
 # BuzzFeed dev
 source ~/.bash_profile_buzzfeed
