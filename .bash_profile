@@ -46,7 +46,7 @@ function virtualenv_info() {
 # export PROMPT_COMMAND='PS1="$(virtualenv_info)${CYAN}\u@${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ "'
 
 # sets prompt and window title
-export PROMPT_COMMAND='PS1="$(virtualenv_info)${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ " ; echo -ne "\033]0; ${PWD##*/}\007"'
+export PROMPT_COMMAND='PS1="$(virtualenv_info)${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ " ; echo -ne "\033]0;$(virtualenv_info) ${PWD##*/}\007"'
 
 # BuzzFeed dev
 source ~/.bash_profile_buzzfeed
