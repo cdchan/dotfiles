@@ -9,7 +9,14 @@ OFF='\[\033[0m\]'
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-alias ls='ls -GFh'
+
+# detect OS
+# OSX doesn't use gnu ls
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ls='ls -GFh'
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+    alias ls='ls --color=always -Fh'
+fi
 
 function git_prompt () {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
@@ -51,3 +58,7 @@ export PROMPT_COMMAND='PS1="$(virtualenv_info)${GREEN}\h:${YELLOW}\w${OFF}$(git_
 # BuzzFeed dev
 source ~/.bash_profile_buzzfeed
 
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/buzzfeed/bin:$PATH"
+export PATH="/buzzfeed/local/bin:$PATH"
