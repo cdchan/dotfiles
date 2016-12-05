@@ -4,19 +4,18 @@ GREEN='\[\033[32m\]'
 YELLOW='\[\033[33m\]'
 OFF='\[\033[0m\]'
 
-# simple prompt
-# export PS1="${CYAN}\u@${GREEN}\h:${YELLOW}\w${OFF}$ "
+##### fix ls
 
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
+export CLICOLOR=1  # show colors for ls on macOS
 
-# detect OS
-# OSX doesn't use gnu ls
+# detect OS, macOS doesn't use gnu ls
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias ls='ls -GFh'
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias ls='ls --color=always -Fh'
 fi
+
+##### git branch
 
 function git_prompt () {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
@@ -35,9 +34,12 @@ function git_prompt () {
   echo " [$git_branch]"
 }
 
-# disable prompt change from virtualenv
+##### virtualenv info
+
+# disable prompt change from virtualenv because I have a custom prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
+# define virtualenv for custom prompt
 function virtualenv_info() {
   if [[ $VIRTUAL_ENV != "" ]]
     then
@@ -49,13 +51,12 @@ function virtualenv_info() {
   echo $venv
 }
 
+##### set prompt and window title
+
+# simple prompt
+# export PS1="${CYAN}\u@${GREEN}\h:${YELLOW}\w${OFF}$ "
+
 # this includes username in prompt
 # export PROMPT_COMMAND='PS1="$(virtualenv_info)${CYAN}\u@${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ "'
 
-# sets prompt and window title
 export PROMPT_COMMAND='PS1="$(virtualenv_info)${GREEN}\h:${YELLOW}\w${OFF}$(git_prompt) $ " ; echo -ne "\033]0;$(virtualenv_info) [${HOSTNAME:0:3}] ${PWD##*/}\007"'
-
-# BuzzFeed dev
-source ~/.bash_profile_buzzfeed
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-
