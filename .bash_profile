@@ -6,11 +6,11 @@ OFF='\[\033[0m\]'
 
 ##### fix ls
 
-export CLICOLOR=1  # show colors for ls on macOS
-
 # detect OS, macOS doesn't use gnu ls
 if [[ "$OSTYPE" == "darwin"* ]]; then  # other OSTYPE is "linux-gnu"
     alias ls='ls -GFh'
+    export CLICOLOR=1  # show colors for ls on macOS
+    export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 else
     alias ls='ls --color=always -Fh'
 fi
